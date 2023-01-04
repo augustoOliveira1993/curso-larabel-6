@@ -7,7 +7,26 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $request;
-    public array $products = ['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5'];
+    public array $products = [
+        [
+            "id" => 1,
+            "name" => 'TV',
+            "price" => 1000,
+            "description" => "Smart TV"
+        ],
+        [
+            "id" => 2,
+            "name" => 'Notebook',
+            "price" => 5000,
+            "description" => "Macbook Pro"
+        ],
+        [
+            "id" => 3,
+            "name" => 'Tablet',
+            "price" => 2000,
+            "description" => "Ipad"
+        ]
+    ];
 
     public function __construct(Request $request)
     {
@@ -25,6 +44,7 @@ class ProductController extends Controller
         $testeContent = 123;
         $testeContent2 = 321;
         $testeContent3 = [];
+
         return view('admin.pages.products.index' , compact("products", "testeContent", "testeContent2", "testeContent3"));
     }
 

@@ -3,77 +3,104 @@
 
 @section('content')
     <h1>Exibindo os produtos</h1>
-
-    @if($testeContent === '123')
-        <p>É Igual a '123'</p>
-    @elseif($testeContent == 123)
-        <p>É um numero 123</p>
-    @else
-        <p>É Diferente</p>
-    @endif
-
-    @unless($testeContent === '123')
-        <p>asdkoaskdo</p>
-    @else
-        <p>asdasdas 22111</p>
-    @endunless
-
-    @isset($testeContent2)
-        {{ $testeContent2 }}
-    @endisset
-
-    @empty($testeContent3)
-        <p>Vazio</p>
-    @endempty
-
-    @auth
-        <p>Autenticado</p>
-    @else
-        <p>Não Autenticado</p>
-    @endauth
-
-    @guest
-        <p>Não Autenticado</p>
-    @endguest
-
-    @switch($testeContent)
-        @case(1)
-            Igual 1
-            @break
-        @case(2)
-            Igual 2
-            @break
-        @case(3)
-            Igual 3
-            @break
-        @case(123)
-            Igual 123
-            @break
-        @default
-            Default
-    @endswitch
-
+    <a href="{{ route('products.create') }}">Cadastrar</a>
     <hr>
-    @if(isset($products))
-        <ul>
-            @foreach($products as $product)
-                <li class="@if($loop->last) last @endif">{{ $product }}</li>
+    @include('admin.alerts.alerts', ['content' => 'Alerta de preços'])
+    @if (isset($products))
+        <table border="1" width="100%">
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+                <th width="100px">Ações</th>
+            </tr>
+            @foreach ($products as $product)
+                <tr>
+                    <td>{{ $product['name'] }}</td>
+                    <td>{{ $product['price'] }}</td>
+                    <td>{{ $product['description'] }}</td>
+                    <td>
+                        <a href="{{ route('products.edit', $product['id']) }}">Editar</a>
+                        <a href="{{ route('products.show', $product['id']) }}">Detalhes</a>
+                    </td>
+                </tr>
             @endforeach
-        </ul>
+        </table>
     @endif
-
-    <hr>
-
-    @forelse($products as $product)
-        <p class="@if($loop->first) last @endif">{{ $product }}</p>
-    @empty
-        <p>Não existe produtos cadastrado..</p>
-    @endforelse
-
 @endsection
+{{--@section('content')--}}
+{{--    <h1>Exibindo os produtos</h1>--}}
 
-<style>
-    .last {
-        background: #CCC;
-    }
-</style>
+{{--    @if($testeContent === '123')--}}
+{{--        <p>É Igual a '123'</p>--}}
+{{--    @elseif($testeContent == 123)--}}
+{{--        <p>É um numero 123</p>--}}
+{{--    @else--}}
+{{--        <p>É Diferente</p>--}}
+{{--    @endif--}}
+
+{{--    @unless($testeContent === '123')--}}
+{{--        <p>asdkoaskdo</p>--}}
+{{--    @else--}}
+{{--        <p>asdasdas 22111</p>--}}
+{{--    @endunless--}}
+
+{{--    @isset($testeContent2)--}}
+{{--        {{ $testeContent2 }}--}}
+{{--    @endisset--}}
+
+{{--    @empty($testeContent3)--}}
+{{--        <p>Vazio</p>--}}
+{{--    @endempty--}}
+
+{{--    @auth--}}
+{{--        <p>Autenticado</p>--}}
+{{--    @else--}}
+{{--        <p>Não Autenticado</p>--}}
+{{--    @endauth--}}
+
+{{--    @guest--}}
+{{--        <p>Não Autenticado</p>--}}
+{{--    @endguest--}}
+
+{{--    @switch($testeContent)--}}
+{{--        @case(1)--}}
+{{--            Igual 1--}}
+{{--            @break--}}
+{{--        @case(2)--}}
+{{--            Igual 2--}}
+{{--            @break--}}
+{{--        @case(3)--}}
+{{--            Igual 3--}}
+{{--            @break--}}
+{{--        @case(123)--}}
+{{--            Igual 123--}}
+{{--            @break--}}
+{{--        @default--}}
+{{--            Default--}}
+{{--    @endswitch--}}
+
+{{--    <hr>--}}
+{{--    @if(isset($products))--}}
+{{--        <ul>--}}
+{{--            @foreach($products as $product)--}}
+{{--                <li class="@if($loop->last) last @endif">{{ $product }}</li>--}}
+{{--            @endforeach--}}
+{{--        </ul>--}}
+{{--    @endif--}}
+
+{{--    <hr>--}}
+
+{{--    @forelse($products as $product)--}}
+{{--        <p class="@if($loop->first) last @endif">{{ $product }}</p>--}}
+{{--    @empty--}}
+{{--        <p>Não existe produtos cadastrado..</p>--}}
+{{--    @endforelse--}}
+
+{{--@endsection--}}
+
+{{--<style>--}}
+{{--    .last {--}}
+{{--        background: #CCC;--}}
+{{--    }--}}
+{{--</style>--}}
