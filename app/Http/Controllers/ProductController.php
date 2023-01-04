@@ -6,37 +6,86 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $products = ['Product 1', 'Product 2', 'Product 3'];
         return $products;
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return 'Create';
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         return "Exibindo o produto de id: {$id}";
     }
 
-    public function create($request)
-    {
-        return 'Formulário de cadastro de produto';
-    }
-
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        return "Formulário de edição do produto de id: {$id}";
-    }
-    public function update($id)
-    {
-        return "Editando o produto do id: {$id}";
+        return "Formulário para editar o produto de id: {$id}";
     }
 
-    public function store()
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        return 'Cadastrando um produto';
+        return "Atualizando o produto de id: {$id}";
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
-        return "Deletado o produto do id: {$id}";
+        return "Deletando o produto de id: {$id}";
     }
 }
