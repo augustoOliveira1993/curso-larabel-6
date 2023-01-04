@@ -17,7 +17,7 @@ class ProductController extends Controller
         return "Exibindo o produto de id: {$id}";
     }
 
-    public function create()
+    public function create($request)
     {
         return 'Formulário de cadastro de produto';
     }
@@ -26,9 +26,17 @@ class ProductController extends Controller
     {
         return "Formulário de edição do produto de id: {$id}";
     }
+    public function update($id)
+    {
+        return "Editando o produto do id: {$id}";
+    }
 
     public function store()
     {
         return 'Cadastrando um produto';
+    }
+    public function destroy($id)
+    {
+        return "Deletado o produto do id: {$id}";
     }
 }
