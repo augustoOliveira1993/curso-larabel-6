@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $request;
+    public array $products = ['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5'];
 
     public function __construct(Request $request)
     {
@@ -20,8 +21,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = ['Product 1', 'Product 2', 'Product 3'];
-        return $products;
+        $products = $this->products;
+        $testeContent = '<strong>Teste de conteúdo</strong>';
+        return view('products' , compact("products", "testeContent"));
     }
 
     /**
