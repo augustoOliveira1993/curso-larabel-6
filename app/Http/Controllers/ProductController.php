@@ -7,18 +7,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $request;
-    public array $products = [
-        '1' => [
-            'name' => 'TV',
-            'price' => 1000,
-            'description' => 'Smart TV'
-        ],
-        '2' => [
-            'name' => 'Phone',
-            'price' => 500,
-            'description' => 'Smart Phone'
-        ]
-    ];
+    public array $products = ['Product 1', 'Product 2', 'Product 3', 'Product 4', 'Product 5'];
 
     public function __construct(Request $request)
     {

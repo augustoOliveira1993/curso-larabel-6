@@ -57,15 +57,23 @@
     @if(isset($products))
         <ul>
             @foreach($products as $product)
-                <li>{{ $product }}</li>
+                <li class="@if($loop->last) last @endif">{{ $product }}</li>
             @endforeach
         </ul>
     @endif
+
     <hr>
+
     @forelse($products as $product)
-        <p>{{ $product->name }}</p>
+        <p class="@if($loop->first) last @endif">{{ $product }}</p>
     @empty
         <p>Não existe produtos cadastrado..</p>
     @endforelse
 
 @endsection
+
+<style>
+    .last {
+        background: #CCC;
+    }
+</style>
