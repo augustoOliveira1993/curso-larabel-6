@@ -57,7 +57,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return 'Create';
+
+        return view('admin.pages.products.create');
     }
 
     /**
@@ -67,7 +68,8 @@ class ProductController extends Controller
      */
     public function store()
     {
-
+        dd('Cadastrando...');
+        return redirect()->route('products.index');
     }
 
     /**
