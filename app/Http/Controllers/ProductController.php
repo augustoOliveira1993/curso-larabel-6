@@ -91,7 +91,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return "Formulário para editar o produto de id: {$id}";
+        $product = $this->products[$id];
+        return view('admin.pages.products.edit', compact('product'));
     }
 
     /**
@@ -103,6 +104,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd('Editando o produto de id: ' . $id);
         return "Atualizando o produto de id: {$id}";
     }
 

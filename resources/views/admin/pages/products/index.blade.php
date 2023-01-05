@@ -2,10 +2,17 @@
 @section('title', 'Gestão de Produtos')
 
 @section('content')
-    <h1>Exibindo os produtos</h1>
-    <a href="{{ route('products.create') }}">Cadastrar</a>
-    <hr>
-    @include('admin.includes.alerts', ['content' => 'Alerta de preços'])
+    <div class="row justify-content-between align-content-between">
+        <div class="col-10">
+            <h1>Exibindo os produtos</h1>
+        </div>
+        <div class="col-auto align-items-end align-self-center justify-content-end">
+            <button id="btn-cadastrar" type="button" class="btn btn-primary">Cadastrar</button>
+        </div>
+        @include('admin.includes.alerts', ['content' => 'Alerta de preços'])
+    </div>
+
+
 
     @component('admin.components.card')
         @slot('header')
@@ -14,31 +21,57 @@
         Um card de exemplo
     @endcomponent
 
-    <hr>
+
 
 
     @if (isset($products))
-        <table border="1" width="100%">
-            <tr>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Descrição</th>
-                <th width="100px">Ações</th>
-            </tr>
-            @foreach ($products as $product)
+        @component('admin.components.tables')
+            @slot('header')
                 <tr>
-                    <td>{{ $product['name'] }}</td>
-                    <td>{{ $product['price'] }}</td>
-                    <td>{{ $product['description'] }}</td>
-                    <td>
-                        <a href="{{ route('products.edit', $product['id']) }}">Editar</a>
-                        <a href="{{ route('products.show', $product['id']) }}">Detalhes</a>
-                    </td>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Descrição</th>
+                    <th width="100">Ações</th>
                 </tr>
-            @endforeach
-        </table>
+            @endslot
+            @slot('body')
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product['id'] }}</td>
+                        <td>{{ $product['name'] }}</td>
+                        <td>{{ $product['price'] }}</td>
+                        <td>{{ $product['description'] }}</td>
+                        <td class="col-1">
+                            <i class="bi bi-0-circle"></i>
+                            <button id="btn-view" type="button" class="btn btn-primary"><i class="bi bi-eye"></i></button>
+                            <button id="btn-edit" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                            <button id="btn-delete" type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
+            @endslot
+        @endcomponent
     @endif
 @endsection
+
+@push('script-actions-table')
+    <script>
+        const btnView = document.getElementById('btn-view');
+        const btnEdit = document.getElementById('btn-view');
+        const btnDelete = document.getElementById('btn-view');
+
+        btnView.addEventListener('click', function() {
+            window.location.href = "{{ route('products.show', $product['id']) }}";
+        });
+        btnEdit.addEventListener('click', function() {
+            window.location.href = "{{ route('products.edit', $product['id']) }}";
+        });
+        btnDelete.addEventListener('click', function() {
+            window.location.href = "{{ route('products.destroy', $product['id']) }}";
+        });
+    </script>
+@endpush
 {{--@section('content')--}}
 {{--    <h1>Exibindo os produtos</h1>--}}
 
@@ -119,6 +152,10 @@
 
 @push('scripts')
     <script>
+        const btnCadastrar = document.getElementById('btn-cadastrar');
+        btnCadastrar.addEventListener('click', () => {
+            window.location.href = "{{ route('products.create') }}";
+        });
         document.body.style.background = '#efefef';
     </script>
 @endpush

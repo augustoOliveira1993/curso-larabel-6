@@ -1,8 +1,11 @@
-<div class="card">
-    <div class="card-header">
-        {{ $header ?? 'Default Title' }}
-    </div>
+<div class="card" style="width: 100%;">
     <div class="card-body">
-        {{ $slot }}
+        <h5 class="card-title">{{ $header ?? 'Default Title' }}</h5>
+        <p class="card-text">
+            {{ $slot }}
+        </p>
+        <div class="card-action">
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
     </div>
 </div>
