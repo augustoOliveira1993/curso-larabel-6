@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $request;
+
+
     public array $products = [
         [
             "id" => 1,

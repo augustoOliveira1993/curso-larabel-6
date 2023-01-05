@@ -5,7 +5,18 @@
     <h1>Exibindo os produtos</h1>
     <a href="{{ route('products.create') }}">Cadastrar</a>
     <hr>
-    @include('admin.alerts.alerts', ['content' => 'Alerta de preços'])
+    @include('admin.includes.alerts', ['content' => 'Alerta de preços'])
+
+    @component('admin.components.card')
+        @slot('header')
+            <h1>Título Card</h1>
+        @endslot
+        Um card de exemplo
+    @endcomponent
+
+    <hr>
+
+
     @if (isset($products))
         <table border="1" width="100%">
             <tr>
@@ -98,9 +109,16 @@
 {{--    @endforelse--}}
 
 {{--@endsection--}}
+@push('styles')
+    <style>
+        .last {
+            background: #CCC;
+        }
+    </style>
+@endpush
 
-{{--<style>--}}
-{{--    .last {--}}
-{{--        background: #CCC;--}}
-{{--    }--}}
-{{--</style>--}}
+@push('scripts')
+    <script>
+        document.body.style.background = '#efefef';
+    </script>
+@endpush
