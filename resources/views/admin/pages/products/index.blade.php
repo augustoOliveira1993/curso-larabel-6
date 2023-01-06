@@ -42,9 +42,8 @@
                         <td>{{ $product['name'] }}</td>
                         <td>{{ $product['price'] }}</td>
                         <td>{{ $product['description'] }}</td>
-                        <td class="col-1">
-                            <i class="bi bi-0-circle"></i>
-                            <button id="btn-view" type="button" class="btn btn-primary"><i class="bi bi-eye"></i></button>
+                        <td class="col-2">
+                            <button id="btn-view" type="button" class="btn btn-primary"><i class="fas fa-eye"></i></button>
                             <button id="btn-edit" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
                             <button id="btn-delete" type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </td>

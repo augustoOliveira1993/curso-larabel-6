@@ -47,7 +47,7 @@ class ProductController extends Controller
         $testeContent2 = 321;
         $testeContent3 = [];
 
-        return view('admin.pages.products.index' , compact("products", "testeContent", "testeContent2", "testeContent3"));
+        return view('admin.pages.products.index', compact("products", "testeContent", "testeContent2", "testeContent3"));
     }
 
     /**
@@ -63,12 +63,23 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        dd('Cadastrando...');
+//        dd($request->all());
+//        dd($request->only(['name', 'price', 'description']));
+//        dd($request->name, $request->price, $request->description);
+//       dd($request->input('name', 'default'));
+//        dd($request->except(['_token']));
+
+        if ($request->file('photo')->isValid()) {
+//           $request->file('photo')->store('products');
+            $nameFile = $request->name . '.' . $request->photo->extension();
+            $result = $request->file('photo')->storeAs('products', $nameFile);
+            dd('Foto salvar com sucesso!' . $result);
+        }
         return redirect()->route('products.index');
     }
 
