@@ -77,10 +77,9 @@ class ProductController extends Controller
         if ($request->file('photo')->isValid()) {
 //           $request->file('photo')->store('products');
             $nameFile = $request->name . '.' . $request->photo->extension();
-            $result = $request->file('photo')->storeAs('products', $nameFile);
-            dd('Foto salvar com sucesso!' . $result);
+            $request->file('photo')->storeAs('products', $nameFile, 'public');
         }
-        return redirect()->route('products.index');
+//        return redirect()->route('products.index');
     }
 
     /**
