@@ -10,6 +10,8 @@
 @section('content')
     <h1>Cadastrar Novo Produto</h1>
 
+    @include('admin.includes.alerts')
+
     <form action="{{ route('products.store') }}" method="POST" class="row w-100  mt-2" enctype="multipart/form-data">
         @csrf
         <input hidden type="text" name="_token" value="{{ csrf_token() }}">
@@ -27,7 +29,7 @@
         </div>
         <div class="mb-3">
             <label for="inputGroupFile01" class="form-label">Foto Produto</label>
-            <input type="file" name="photo" class="form-control" id="inputGroupFile01">
+            <input type="file" name="image" class="form-control" id="inputGroupFile01">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>

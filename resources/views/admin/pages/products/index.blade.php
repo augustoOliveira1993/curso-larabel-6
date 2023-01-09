@@ -9,20 +9,7 @@
         <div class="col-auto align-items-end align-self-center justify-content-end">
             <button id="btn-cadastrar" type="button" class="btn btn-primary">Cadastrar</button>
         </div>
-        @include('admin.includes.alerts', ['content' => 'Alerta de preços'])
     </div>
-
-
-
-    @component('admin.components.card')
-        @slot('header')
-            <h1>Título Card</h1>
-        @endslot
-        Um card de exemplo
-    @endcomponent
-
-
-
 
     @if (isset($products))
         @component('admin.components.tables')
@@ -46,12 +33,27 @@
 
                             <a id="btn-view" type="button" class="btn btn-primary" href="{{ route('products.show', $product->id) }}"><i class="fas fa-eye"></i></a>
                             <a id="btn-edit" type="button" class="btn btn-success" href="{{ route('products.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
-                            <a id="btn-delete" type="button" class="btn btn-danger" href="{{ route('products.destroy', $product->id) }}"><i class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 @endforeach
             @endslot
         @endcomponent
+
+        @if ($products->lastPage() > 1)
+            <ul class="pagination">
+                <li class="page-item {{ ($products->currentPage() == 1) ? ' disabled' : '' }}">
+                    <a class="page-link" href="{{ $products->url(1) }}">Primeira</a>
+                </li>
+                @for ($i = 1; $i <= $products->lastPage(); $i++)
+                    <li class="page-item {{ ($products->currentPage() == $i) ? ' active' : '' }}">
+                        <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                <li class="page-item {{ ($products->currentPage() == $products->lastPage()) ? ' disabled' : '' }}">
+                    <a class="page-link" href="{{ $products->url($products->lastPage()) }}">Última</a>
+                </li>
+            </ul>
+        @endif
     @endif
 @endsection
 

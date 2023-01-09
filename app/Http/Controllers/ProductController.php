@@ -24,6 +24,7 @@ class ProductController extends Controller
     {
         // last ordena por id
         $products = Product::latest()->paginate(10);
+//        dd($products);
         return view('admin.pages.products.index', [
             'products' => $products
         ]);
@@ -48,17 +49,17 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
-//        dd($request->only(['name', 'price', 'description']));
-//        dd($request->name, $request->price, $request->description);
-//       dd($request->input('name', 'default'));
-//        dd($request->except(['_token']));
+        $data = $request->only(['name', 'price', 'description', 'photo']);
+        Product::create($data);
 
-        if ($request->file('photo')->isValid()) {
-//           $request->file('photo')->store('products');
-            $nameFile = $request->name . '.' . $request->photo->extension();
-            $request->file('photo')->storeAs('products', $nameFile, 'public');
-        }
-//        return redirect()->route('products.index');
+
+//        if ($request->file('photo')->isValid()) {
+////           $request->file('photo')->store('products');
+//            $nameFile = $request->name . '.' . $request->photo->extension();
+//            $request->file('photo')->storeAs('products', $nameFile, 'public');
+//        }
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -70,7 +71,7 @@ class ProductController extends Controller
     public function show(int $id)
     {
 
-        if(!$product = Product::find($id)){
+        if (!$product = Product::find($id)) {
             return redirect()->back();
         }
         return view('admin.pages.products.show', [
@@ -86,7 +87,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::find($id)->first();
         return view('admin.pages.products.edit', compact('product'));
     }
 
