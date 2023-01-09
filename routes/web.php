@@ -2,10 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 Route::get('/login', function () {
     return 'Login';
 })->name('login');
+
+Route::resource('users', UserController::class);
 /*
     Route::delete('products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::put('products/{id}', [ProductController::class, 'update'])->name('products.update');

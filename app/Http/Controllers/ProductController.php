@@ -2,33 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected $request;
 
-
-    public array $products = [
-        [
-            "id" => 1,
-            "name" => 'TV',
-            "price" => 1000,
-            "description" => "Smart TV"
-        ],
-        [
-            "id" => 2,
-            "name" => 'Notebook',
-            "price" => 5000,
-            "description" => "Macbook Pro"
-        ],
-        [
-            "id" => 3,
-            "name" => 'Tablet',
-            "price" => 2000,
-            "description" => "Ipad"
-        ]
-    ];
 
     public function __construct(Request $request)
     {
@@ -38,16 +18,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $products = $this->products;
-        $testeContent = 123;
-        $testeContent2 = 321;
-        $testeContent3 = [];
-
-        return view('admin.pages.products.index', compact("products", "testeContent", "testeContent2", "testeContent3"));
+        // last ordena por id
+        $products = Product::latest()->paginate(10);
+        return view('admin.pages.products.index', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -86,22 +65,28 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(int $id)
     {
-        return "Exibindo o produto de id: {$id}";
+
+        if(!$product = Product::find($id)){
+            return redirect()->back();
+        }
+        return view('admin.pages.products.show', [
+            'product' => $product
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        $product = $this->products[$id];
+        $product = Product::find($id);
         return view('admin.pages.products.edit', compact('product'));
     }
 
@@ -114,7 +99,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('Editando o produto de id: ' . $id);
+//        $product = Product::updated($id);
         return "Atualizando o produto de id: {$id}";
     }
 
@@ -126,6 +111,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        Product::destroy($id);
         return "Deletando o produto de id: {$id}";
     }
 }

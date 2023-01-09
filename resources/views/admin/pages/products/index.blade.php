@@ -37,15 +37,16 @@
             @endslot
             @slot('body')
                 @foreach ($products as $product)
-                    <tr>
-                        <td>{{ $product['id'] }}</td>
-                        <td>{{ $product['name'] }}</td>
-                        <td>{{ $product['price'] }}</td>
-                        <td>{{ $product['description'] }}</td>
+                    <tr class="">
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->description }}</td>
                         <td class="col-2">
-                            <button id="btn-view" type="button" class="btn btn-primary"><i class="fas fa-eye"></i></button>
-                            <button id="btn-edit" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
-                            <button id="btn-delete" type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+
+                            <a id="btn-view" type="button" class="btn btn-primary" href="{{ route('products.show', $product->id) }}"><i class="fas fa-eye"></i></a>
+                            <a id="btn-edit" type="button" class="btn btn-success" href="{{ route('products.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
+                            <a id="btn-delete" type="button" class="btn btn-danger" href="{{ route('products.destroy', $product->id) }}"><i class="far fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -54,23 +55,7 @@
     @endif
 @endsection
 
-@push('script-actions-table')
-    <script>
-        const btnView = document.getElementById('btn-view');
-        const btnEdit = document.getElementById('btn-view');
-        const btnDelete = document.getElementById('btn-view');
 
-        btnView.addEventListener('click', function() {
-            window.location.href = "{{ route('products.show', $product['id']) }}";
-        });
-        btnEdit.addEventListener('click', function() {
-            window.location.href = "{{ route('products.edit', $product['id']) }}";
-        });
-        btnDelete.addEventListener('click', function() {
-            window.location.href = "{{ route('products.destroy', $product['id']) }}";
-        });
-    </script>
-@endpush
 {{--@section('content')--}}
 {{--    <h1>Exibindo os produtos</h1>--}}
 
