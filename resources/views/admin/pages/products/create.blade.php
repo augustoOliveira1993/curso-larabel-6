@@ -43,12 +43,4 @@
     </form>
 @endsection
 
-@push('styles')
-    <style>
-        .last {
-            background: #CCC;
-        }
-    </style>
-@endpush
-
 
