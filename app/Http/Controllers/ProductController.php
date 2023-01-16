@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected $request;
+    private $repository;
 
-
-    public function __construct(Request $request)
+    public function __construct(Request $request, Product $product)
     {
         $this->request = $request;
+        $this->repository = $product;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -33,7 +37,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -43,14 +47,14 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreUpdateProductRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
 //        dd($request->all());
         $data = $request->only(['name', 'price', 'description', 'photo']);
-        Product::create($data);
+        $this->repository->create($data);
 
 
 //        if ($request->file('photo')->isValid()) {
@@ -71,7 +75,7 @@ class ProductController extends Controller
     public function show(int $id)
     {
 
-        if (!$product = Product::find($id)) {
+        if (!$product = $this->repository->find($id)) {
             return redirect()->back();
         }
         return view('admin.pages.products.show', [
@@ -83,36 +87,47 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function edit($id)
     {
-        $product = Product::find($id)->first();
+
+        $product = $this->repository->find($id);
+        if(!$product){
+            return redirect()->back();
+        }
         return view('admin.pages.products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreUpdateProductRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateProductRequest $request, $id)
     {
-//        $product = Product::updated($id);
-        return "Atualizando o produto de id: {$id}";
+        if(!$product = $this->repository->find($id)){
+            return redirect()->back();
+        }
+        $product->update($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        Product::destroy($id);
-        return "Deletando o produto de id: {$id}";
+        $product = $this->repository->where('id', $id)->first();
+        if(!$product){
+            return redirect()->back();
+        }
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }

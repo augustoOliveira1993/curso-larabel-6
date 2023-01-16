@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Criação de Produtos')
+@section('title', "Editar Produto {$product->name}")
 
 @push('scripts')
     <script>
@@ -8,16 +8,12 @@
 @endpush
 
 @section('content')
-    <h1>Editar Produto - {{ $product['id']  }}</h1>
+    <h1>Editar Produto - {{ $product->name  }}</h1>
 
-    <form action="{{ route('products.update', $product['id']) }}" method="POST">
+    <form action="{{ route('products.update', $product->id) }}" method="POST">
         @method('PUT')
-        @csrf
-        <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-        <input type="text" name="name" id="name" placeholder="Nome" value="{{ $product['name'] }}">
-        <input type="text" name="description" id="description" placeholder="Descrição" value="{{ $product['description'] }}">
+        @include('admin.pages.products._partials.form', ['btmSubmit'=>'Atualiar'])
 
-        <button type="submit">Enviar</button>
     </form>
 @endsection
 
